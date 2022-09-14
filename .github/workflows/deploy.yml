@@ -1,0 +1,32 @@
+name: Deploy Frontend
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker build -t skymnok/react-test -f ./client/dockerfile.dev ./client
+      - run: docker run -e CI=true skymnok/react-test npm test
+      - run: docker build -t skymnok/multi-client ./client
+      - run: docker build -t skymnok/multi-nginx ./nginx
+      - run: docker build -t skymnok/multi-server ./server
+      - run: docker build -t skymnok/multi-worker ./worker
+
+#      - name: Generate deployment package
+#        run: zip -r deploy.zip . -x '*.git*'
+
+#      - name: Deploy to EB
+#        uses: einaregilsson/beanstalk-deploy@v18
+#        with:
+#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+#          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+#          application_name: docker-react
+#          environment_name: Dockerreact-env
+#          existing_bucket_name: elasticbeanstalk-us-east-1-382393389711
+#          region: us-east-1
+#          version_label: ${{ github.sha }}
+#          deployment_package: deploy.zip
