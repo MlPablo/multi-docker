@@ -9,12 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        #Log in the docker CLI
+      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - run: docker build -t skymnok/react-test -f ./client/dockerfile.dev ./client
       - run: docker run -e CI=true skymnok/react-test npm test
       - run: docker build -t skymnok/multi-client ./client
       - run: docker build -t skymnok/multi-nginx ./nginx
       - run: docker build -t skymnok/multi-server ./server
       - run: docker build -t skymnok/multi-worker ./worker
+      # push to docker hub
+      - run: docker push skymnok/multi-client
+      - run: docker push skymnok/multi-nginx
+      - run: docker push skymnok/multi-server
+      - run: docker push skymnok/multi-worker
 
 #      - name: Generate deployment package
 #        run: zip -r deploy.zip . -x '*.git*'
