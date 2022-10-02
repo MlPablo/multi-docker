@@ -47,7 +47,7 @@ services:
       - redis
   nginx:
     build:
-      context: ./ngnix
+      context: ./nginx
       dockerfile: dockerfile.dev
     restart: always
     depends_on:
