@@ -6,13 +6,13 @@ services:
     deploy:
       resources:
         limits:
-          memory: 128m
+          memory: 128M
   server:
     image: "skymnok/multi-server"
     deploy:
       resources:
         limits:
-          memory: 128m
+          memory: 128M
     hostname: api
     environment:
       - REDIS_HOST=$REDIS_HOST
@@ -27,7 +27,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 128m
+          memory: 128M
     hostname: worker
     environment:
       - REDIS_HOST=$REDIS_HOST
@@ -37,7 +37,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 128m
+          memory: 128M
     hostname: nginx
     ports:
       - "80:80"
