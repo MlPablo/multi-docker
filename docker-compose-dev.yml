@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   postgres:
     image: postgres:latest
@@ -54,6 +54,6 @@ services:
       - client
       - api
     ports:
-      - "80:80"
+      - "3050:80"
 
 
